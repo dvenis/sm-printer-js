@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Sim File Parser</title>
+  </head>
+
+  <body>
+  
+  
+  
+	<input type="file" id="file_selector" onchange="display()"></input>
+	
+	<div id="editor">
+	</div>
+	
+	
+	<script>
+		function display() {
+            getFileContents();
+		}
+		
+		function getFileContents() {
+			input = document.getElementById('file_selector');
+			file = input.files[0];
+			fr = new FileReader();
+			fr.onload = fileFinishedLoading;
+			fr.readAsDataURL(file);
+		}
+		
+        function fileFinishedLoading() {           
+           	result = fr.result;
+            document.getElementById('editor').appendChild(document.createTextNode(fr.result))
+         }   
+	</script>
+  </body>
+</html>
