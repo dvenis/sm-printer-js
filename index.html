@@ -5,18 +5,17 @@
   </head>
 
   <body>
-  
-  
-  
-	<input type="file" id="file_selector" onchange="display()"></input>
+	<input type="file" id="file_selector" onchange="handleFile()"></input>
 	
 	<div id="editor">
 	</div>
 	
+	<script src="src/util/parser.js"></script>
+	<script src="src/models/sim_file.js"></script>
 	
 	<script>
-		function display() {
-            getFileContents();
+		function handleFile() {
+			getFileContents();
 		}
 		
 		function getFileContents() {
@@ -24,13 +23,15 @@
 			file = input.files[0];
 			fr = new FileReader();
 			fr.onload = fileFinishedLoading;
-			fr.readAsDataURL(file);
+			fr.readAsText(file);
 		}
 		
-        function fileFinishedLoading() {           
-           	result = fr.result;
-            document.getElementById('editor').appendChild(document.createTextNode(fr.result))
-         }   
+		function fileFinishedLoading() {       
+			document.getElementById("editor").innerHTML = fr.result;
+	        parseSimFileContents(fr.result);
+           	
+		 }  
+        
 	</script>
   </body>
 </html>

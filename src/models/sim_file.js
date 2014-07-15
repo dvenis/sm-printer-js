@@ -7,6 +7,7 @@ function SimFile() {
 	this.subtitle = "";
 	this.artist = "";
 	this.credit = "";
+	this.bpms = "";
 	this.displayBPM = "";
 	
 	this.difficulties = [];
@@ -27,8 +28,8 @@ function SimFileDifficulty() {
 	this.difficultyClass = "";
 	this.difficultyMeter = "";
 	this.radarValues = "";
+	this.notesType = "";
 	
-	this.notesType = 0;
 	this.measures = [];
 }
 
