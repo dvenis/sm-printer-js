@@ -14,7 +14,7 @@ function SimFile() {
 }
 
 SimFile.prototype.addDifficulty = function(difficulty) {
-	this.difficulties += difficulty;
+	this.difficulties.push(difficulty);
 };
 
 
@@ -34,7 +34,7 @@ function SimFileDifficulty() {
 }
 
 SimFileDifficulty.prototype.addMeasure = function(measure) {
-	this.measures += measure;
+	this.measures.push(measure);
 };
 
 
@@ -50,7 +50,7 @@ function SimFileMeasure() {
 }
 
 SimFileMeasure.prototype.addLine = function(line) {
-	this.lines += line;
+	this.lines.push(line);
 };
 
 SimFileMeasure.prototype.toString = function() {
@@ -125,17 +125,17 @@ var Orientation = {
 //
 
 var Type = {
-	NONE : -1,
-	REGULAR : 0,
-	FREEZE_START : 1,
-	FREEZE_END : 2,
-	ROLL_START : 3,
-	ROLL_END : 4,
-	MINE : 5,
-	LIFT : 6,
-	FAKE : 7,
+	NONE : 0,
+	REGULAR : 1,
+	FREEZE_START : 2,
+	FREEZE_END : 3,
+	ROLL_START : 4,
+	ROLL_END : 5,
+	MINE : 6,
+	LIFT : 7,
+	FAKE : 8,
 	//custom definitions
-	HOLDING : 8,
-	ROLLING : 9,
-	ROLL_END : 10
+	HOLDING : 9,
+	ROLLING : 10,
+	ROLL_END : 11
 };

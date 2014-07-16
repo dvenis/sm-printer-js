@@ -29,7 +29,6 @@ Parser.prototype.generateSimFile = function() {
 
 Parser.prototype.setDataBasedOnTag = function(part, simFile) {
 	var data = Parser.stripTagFromPart(part);
-	console.log(part);
 	switch(Parser.getTagFromPart(part)) {
 		case "TITLE":
 			simFile.title = data;
@@ -73,9 +72,7 @@ Parser.prototype.generateStepData = function(notesString, simFile) {
 	for (var i = 0; i < measureData.length; i++) {
 		difficulty.addMeasure(this.parseMeasure(measureData[i], i, difficulty.notesType));
 	}
-	
 	simFile.addDifficulty(difficulty);
-	
 };
 
 Parser.prototype.parseMeasure = function(measureString, measureNumber, notesType) {
@@ -84,13 +81,11 @@ Parser.prototype.parseMeasure = function(measureString, measureNumber, notesType
 	var linesInMeasure = rawLines.length;
 	
 	for (var i = 0; i < rawLines.length; i++) {
-//		console.log("line: " + rawLines[i]);
 		var rawLineTrimmed = rawLines[i].trim();
 		this.previouslyAddedLine = Parser.generateStepLine(rawLineTrimmed, this.previouslyAddedLine, notesType, i, linesInMeasure);
 		measure.addLine(this.previouslyAddedLine);
 	}
 	
-//	console.log("added measure: " + measure);
 	return measure;
 };
 
@@ -111,7 +106,6 @@ Parser.generateStepLine = function(rawData, previousLine, notesType, lineIndex, 
 		}
 	}
 	
-	console.log("added line: " + simFileLine);
 	return simFileLine;
 };
 
@@ -119,7 +113,6 @@ Parser.generateStepLine = function(rawData, previousLine, notesType, lineIndex, 
 Parser.generateStep = function(rawCharacter, stepIndex, notesType, previousStep, timing) {
 	var type = Parser.getTypeFromCharacterAndPreviousStep(rawCharacter, previousStep);
 	var orientation = Parser.getOrientationFromNotesTypeAndStepIndex(notesType, stepIndex);
-//	console.log("type: "  + type + " char: " + rawCharacter);
 	return new SimFileStep(type, orientation, timing);
 };
 
@@ -127,7 +120,6 @@ Parser.getTimingFromIndexAndMeasureSize = function(lineIndex, numberLinesInMeasu
 	var length;
 	if (lineIndex != 0) {
 		var gcd = getGCD(numberLinesInMeasure, lineIndex);
-//		console.log("line index: " + lineIndex + " numberlines " + numberLinesInMeasure + " gcd : " + gcd);
 		length = numberLinesInMeasure / gcd;
 		if (length == 2) {
 			return Timing.L4TH;
@@ -157,7 +149,6 @@ Parser.getTypeFromCharacterAndPreviousStep = function(character, previousStep) {
 		return Type.FAKE;
 	//nothing ('0')
 	default:
-//		console.log("default, previous step: " + previousStep);
 		if (previousStep) {
 			//check previous line to make know if user is holding or not
 			switch (previousStep.type) {

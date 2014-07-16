@@ -54,14 +54,14 @@ var basicExampleSimFile =
 	"     1:"+
 	"     0.082,0.000,0.057,0.000,0.000:"+
 	"     "+
-	"0000\n"+
-	"0000\n"+
-	"0000\n"+
+	"1MM0\n"+
+	"2120\n"+
+	"3000\n"+
 	"0000\n"+
 	","+
-	"0000\n"+
-	"0000\n"+
-	"0000\n"+
+	"1004\n"+
+	"1030\n"+
+	"1003\n"+
 	"0000\n;";
                                           
 QUnit.test("parser should parse metadata correctly", function(assert){
@@ -77,4 +77,18 @@ QUnit.test("parser should parse metadata correctly", function(assert){
 			"credit correct");
 	assert.equal(simFile.bpms, "0.000=135.010", 
 			"bpms correct");
+	
+	assert.equal(simFile.difficulties.length, 1,
+			"has 1 difficulty");
+	assert.equal(simFile.difficulties[0].measures.length, 2,
+			"has 2 measures");
+	assert.equal(simFile.difficulties[0].measures[0].lines.length, 4,
+			"has 4 lines in the first measures");
+	assert.equal(simFile.difficulties[0].measures[0].lines[0].steps.length, 4,
+			"has 4 steps in the first line");
+	
+	assert.equal(simFile.difficulties[0].measures[0].lines[1].steps[0].type, Type.FREEZE_START,
+			"read correct type for step");
+	assert.equal(simFile.difficulties[0].measures[1].lines[0].steps[2].type, Type.HOLDING,
+			"read correct type for step");
 });
