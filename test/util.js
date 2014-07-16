@@ -2,6 +2,15 @@
 // parser.js
 //
 
+QUnit.test("parser should generate timings correctly", function(assert) {
+	assert.equal(Parser.getTimingFromIndexAndMeasureSize(0, 5), 1,
+			"timing 1st correct");
+	assert.equal(Parser.getTimingFromIndexAndMeasureSize(3, 8), 8,
+			"timing 8th correct");
+	assert.equal(Parser.getTimingFromIndexAndMeasureSize(12, 16), 4,
+			"timing reduces to longest timing");
+});
+
 QUnit.test("parser should recognize tags within parts correctly", function(assert) {
 	var part = "#NOTES:some notes here";
 	assert.equal(Parser.getTagFromPart(part), "NOTES", 
@@ -45,15 +54,15 @@ var basicExampleSimFile =
 	"     1:"+
 	"     0.082,0.000,0.057,0.000,0.000:"+
 	"     "+
-	"0000"+
-	"0000"+
-	"0000"+
-	"0000"+
+	"0000\n"+
+	"0000\n"+
+	"0000\n"+
+	"0000\n"+
 	","+
-	"0000"+
-	"0000"+
-	"0000"+
-	"0000";
+	"0000\n"+
+	"0000\n"+
+	"0000\n"+
+	"0000\n;";
                                           
 QUnit.test("parser should parse metadata correctly", function(assert){
 	var simFile = parseSimFileContents(basicExampleSimFile);
