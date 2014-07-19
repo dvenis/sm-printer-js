@@ -2,12 +2,49 @@
 <html lang="en">
   <head>
     <title>Sim File Parser</title>
+ 
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
 
   <body>
-	<input type="file" id="file_selector" onchange="handleFile()"></input>
+<!-- 	<input type="file" id="file_selector" onchange="handleFile()"></input> -->
 	
-	<div id="editor">
+
+	
+	<div id="section_metadata">
+		<div id="song_metadata">
+			<table>
+				<tr>
+					<td class="metadata_label">Title</td>
+					<td class="metadata">Feels just like that night</td>
+				</tr>
+				<tr>
+					<td class="metadata_label">Subtitle</td>
+					<td class="metadata">subtitle</td>
+				</tr>
+				<tr>
+					<td class="metadata_label">Artist</td>
+					<td>Eskimo &amp; Icebird</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<div id="draw_area">
+		<table>
+			<tr>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+			</tr>
+			<tr>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+				<td><img src="assets/Motsu.jpg"></td>
+			</tr>
+		</table>
 	</div>
 	
 	<script src="src/util/parser.js"></script>
@@ -27,7 +64,6 @@
 		}
 		
 		function fileFinishedLoading() {       
-			document.getElementById("editor").innerHTML = fr.result;
 	        parseSimFileContents(fr.result);
            	
 		 }  
