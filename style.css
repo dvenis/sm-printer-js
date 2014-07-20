@@ -83,22 +83,22 @@ body {
 	margin-bottom: -50%;
 }
 
-.stepchart .l {
+.stepchart .d {
 }
 
-.stepchart .d {
+.stepchart .r {
 	transform:rotate(-90deg);
 	-ms-transform:rotate(-90deg); /* IE 9 */
 	-webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
 }
 
-.stepchart .u {
+.stepchart .l {
 	transform:rotate(90deg);
 	-ms-transform:rotate(90deg); /* IE 9 */
 	-webkit-transform:rotate(90deg); /* Opera, Chrome, and Safari */
 }
 
-.stepchart .r {
+.stepchart .u {
 	transform:rotate(180deg);
 	-ms-transform:rotate(180deg); /* IE 9 */
 	-webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */

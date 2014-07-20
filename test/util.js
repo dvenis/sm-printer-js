@@ -64,7 +64,7 @@ var basicExampleSimFile =
 	"1003\n"+
 	"0000\n;";
                                           
-QUnit.test("parser should parse metadata correctly", function(assert){
+QUnit.test("parser should parse metadata correctly", function(assert) {
 	var simFile = parseSimFileContents(basicExampleSimFile);
 	
 	assert.equal(simFile.title, "Feels Just Like That Night",
@@ -91,4 +91,36 @@ QUnit.test("parser should parse metadata correctly", function(assert){
 			"read correct type for step");
 	assert.equal(simFile.difficulties[0].measures[1].lines[0].steps[2].type, Type.HOLDING,
 			"read correct type for step");
+	assert.equal(simFile.difficulties[0].measures[0].lines[0].steps[3].type, Type.NONE,
+			"empty steps are defined as empty");
+});
+
+
+
+//
+// stepchart-generator.js
+//
+
+QUnit.test("generator should add correct sim file line", function(assert) {
+	var line = new SimFileLine();
+	line.steps[0] = new SimFileStep(Type.REGULAR, Orientation.LEFT, Timing.L4TH);
+	line.steps[3] = new SimFileStep(Type.REGULAR, Orientation.RIGHT, Timing.L4TH);
+	
+	var table = document.createElement("table");
+	var generator = new StepChartGenerator(null, "");
+	generator._addStepChartLine(line, table);
+	
+	assert.equal(table.childNodes.length, 1,
+			"adds one row to the table");
+	assert.equal(table.childNodes[0].childNodes.length, 4,
+			"the row has 4 steps");
+	assert.equal(table.childNodes[0].childNodes[0].childNodes.length, 1,
+			"the first step is defined");
+	assert.equal(table.childNodes[0].childNodes[1].childNodes.length, 0,
+			"the second step is not defined");
+	assert.equal(table.childNodes[0].childNodes[2].childNodes.length, 0,
+			"the first step is not defined");
+	assert.equal(table.childNodes[0].childNodes[3].childNodes.length, 1,
+			"the first step is defined");
+	
 });
