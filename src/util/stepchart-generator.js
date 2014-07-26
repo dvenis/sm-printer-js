@@ -1,7 +1,13 @@
+attachStepChartToTable = function(simFile, difficultyIndex, targetTable) {
+	var generator = new StepChartGenerator(simFile);
+	generator.createStepChart(difficultyIndex, targetTable);
+	generator.attachStylesToTable(60, targetTable);
+};
 
-function StepChartGenerator(simFile, notesType) {
+
+
+function StepChartGenerator(simFile) {
 	this.simFile = simFile;
-	this.notesType = notesType;
 
 	this.difficultyIndex = -1;
 	this.difficulty = null;
@@ -17,14 +23,16 @@ StepChartGenerator.prototype.createStepChart = function(difficultyIndex,
 	}
 };
 
+var LENGTH_PER_MEASURE = 250;
+
 StepChartGenerator.prototype.attachStylesToTable = function(bpm, targetTable) {
-	if (targetTable && targetTable.rows) {
-
-
+	if (targetTable && targetTable.rows && this.difficulty) {
+		var measureHeight = LENGTH_PER_MEASURE / 60 * bpm;
+		
 		var tableRowCount = 0;
 		for (var i = 0; i < this.difficulty.measures.length; i++) {
 			var measure = this.difficulty.measures[i];
-			var lineHeight = 1000 / measure.lines.length;
+			var lineHeight = measureHeight / measure.lines.length;
 
 			 for (var j = 0; j < measure.lines.length; j++) {
 				 targetTable.rows[tableRowCount].style.height = lineHeight.toString() + "px";
@@ -33,6 +41,8 @@ StepChartGenerator.prototype.attachStylesToTable = function(bpm, targetTable) {
 		}
 	}
 };
+
+
 
 StepChartGenerator.prototype._addStepChartMeasure = function(measure,
 		targetTable) {
@@ -80,7 +90,7 @@ StepChartGenerator.prototype._getStepClass = function(step) {
 	return "";
 };
 
-BASE_IMAGE_DIRECTORY = "assets/notes/";
+var BASE_IMAGE_DIRECTORY = "assets/notes/";
 
 StepChartGenerator.prototype._getStepImageSource = function(step) {
 	var imgName = "";

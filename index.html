@@ -13,50 +13,63 @@
 	
 	<div id="section_metadata">
 		<div id="song_metadata">
-			<table>
+			<table class="metadata_table">
 				<tr>
 					<td class="metadata_label">Title</td>
-					<td class="metadata">Feels just like that night</td>
+					<td id="md_title" class="metadata">empty title</td>
 				</tr>
 				<tr>
 					<td class="metadata_label">Subtitle</td>
-					<td class="metadata">subtitle</td>
+					<td id="md_subtitle" class="metadata">empty subtitle</td>
 				</tr>
 				<tr>
 					<td class="metadata_label">Artist</td>
-					<td>Eskimo &amp; Icebird</td>
+					<td id="md_artist" class="metadata">empty artist</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div id="difficulty_metadata">
+			<table class="metadata_table">
+				<tr>
+					<td class="metadata_label">Difficulty</td>
+					<td class="metadata">
+						<select id="difficulty_picker" onchange="difficultySelected()">
+							<option>None</option>
+						</select>
+					</td>
 				</tr>
 			</table>
 		</div>
 	</div>
 	
 	<div id="draw_area">
-		<table id="test" class="stepchart">
-			<tr>
-				<td><img class="l" src="assets/4th.png"></td>
-				<td><img class="d" src="assets/4th.png"></td>
-				<td><img class="u" src="assets/4th.png"></td>
-				<td><img class="r" src="assets/4th.png"></td>
-			</tr>
-			<tr>
-				<td></td> 
-				<td></td>
-				<td><img class="u" src="assets/4th.png"></td>
-				<td><img class="r" src="assets/4th.png"></td>
-			</tr>
-			<tr>
-				<td></td> 
-				<td><img class="d" src="assets/4th.png"></td>
-				<td><img class="u" src="assets/4th.png"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td></td> 
-				<td><img class="d" src="assets/4th.png"></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</table>
+<!-- 		<table id="test" class="stepchart"> -->
+<!-- 			<tr> -->
+<!-- 				<td><img class="l" src="assets/4th.png"></td> -->
+<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
+<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
+<!-- 				<td><img class="r" src="assets/4th.png"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td></td>  -->
+<!-- 				<td></td> -->
+<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
+<!-- 				<td><img class="r" src="assets/4th.png"></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td></td>  -->
+<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
+<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
+<!-- 				<td></td> -->
+<!-- 			</tr> -->
+<!-- 			<tr> -->
+<!-- 				<td></td>  -->
+<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
+<!-- 				<td></td> -->
+<!-- 				<td></td> -->
+<!-- 			</tr> -->
+<!-- 		</table> -->
 		
 		<table id="targetchart" class="stepchart">
 		</table>
@@ -64,9 +77,29 @@
 	
 	<script src="src/util/parser.js"></script>
 	<script src="src/util/stepchart-generator.js"></script>
+	<script src="src/util/metadata-manager.js"></script>
 	<script src="src/models/sim-file.js"></script>
 
 	<script>
+		function difficultySelected() {
+			if (simFile) {
+				var selectionIndex = document.getElementById("difficulty_picker").selectedIndex;
+				
+				var table = document.createElement("table");
+				table.id = "targetchart";
+				table.className = "stepchart";
+				attachStepChartToTable(simFile, selectionIndex, table);
+				
+				var drawArea = document.getElementById("draw_area");
+				while (drawArea.firstChild) {
+					drawArea.removeChild(drawArea.firstChild);
+				}				
+				drawArea.appendChild(table);
+				
+				console.log("changed difficulty " + drawArea.childNodes.length);
+			}
+		}
+	
 		function handleFile() {
 			getFileContents();
 		}
@@ -80,12 +113,11 @@
 		}
 		
 		function fileFinishedLoading() {       
-	        var simFile = parseSimFileContents(fr.result);
+	        simFile = parseSimFileContents(fr.result);
            	var table = document.getElementById("targetchart");
-           	var stepChartGenerator = new StepChartGenerator(simFile, "");
-           	stepChartGenerator.createStepChart(6, table);
-           	stepChartGenerator.attachStylesToTable(0, table);
-           	console.log("created! " + table);
+           	
+           	MetadataManager.populateSongMetadataSection(simFile);
+           	MetadataManager.populateDifficultySection(simFile);
 		 }  
         
 	</script>

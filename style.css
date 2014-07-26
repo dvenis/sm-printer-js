@@ -1,5 +1,5 @@
 body {
-	width: 1110px;
+	width: 1150px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -11,25 +11,32 @@ body {
 #section_metadata {
 	float: left;
 	width: 300px;
-	background-color: aqua;
 	margin-left: auto;
 	margin-right: auto;
+	padding: 10px;
 	
+	background-color: aqua;
 	font-family: sans-serif;
 	font-size: 1em;
 }
 
 #song_metadata {
-	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	background-color :#dddddd;
 }
 
-#song_metadata table {
-	width: 100%;
-	background-color: aqua;
+#difficulty_metadata {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #ddd;
 }
 
-#song_metadata td {
+#section_metadata .metadata_table tr {
+	width: 100%;
+}
+
+#section_metadata .metadata_table td {
 	padding: 2px 10px;
 }
 
