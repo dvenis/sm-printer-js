@@ -17,7 +17,7 @@ var MetadataManager = MetadataManager || {
 				var difficulty = simFile.difficulties[i];
 				var option = document.createElement("option");
 				option.value = i.toString();
-				option.innerHTML = difficulty.notesType;
+				option.innerHTML = difficulty.toString();
 				difficultyPicker.appendChild(option);
 			}
 		}

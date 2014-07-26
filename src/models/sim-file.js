@@ -7,7 +7,7 @@ function SimFile() {
 	this.subtitle = "";
 	this.artist = "";
 	this.credit = "";
-	this.bpms = "";
+	this.bpms = {};
 	this.displayBPM = "";
 	
 	this.difficulties = [];
@@ -17,7 +17,20 @@ SimFile.prototype.addDifficulty = function(difficulty) {
 	this.difficulties.push(difficulty);
 };
 
+SimFile.prototype.sortDifficulties = function() {
+	if (this.difficulties) {
+		this.difficulties.sort(function(a, b) {
+			if (a.notesType == b.notesType) {
+				return a.difficultyMeter - b.difficultyMeter;
+			} else {
+				var diff1 = a.notesType + a.difficultyClass;
+				var diff2 = b.notesType + b.difficultyClass;
+				return diff1.localeCompare(diff2);
+			}
 
+		});
+	}
+};
 
 ///
 // Sim File difficulties definitions
@@ -37,6 +50,10 @@ SimFileDifficulty.prototype.addMeasure = function(measure) {
 	this.measures.push(measure);
 };
 
+
+SimFileDifficulty.prototype.toString = function() {
+	return this.notesType + " - " + this.difficultyClass + " (" + this.difficultyMeter + ")";
+};
 
 
 //

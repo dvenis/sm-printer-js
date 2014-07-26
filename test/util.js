@@ -39,6 +39,20 @@ QUnit.test("parser should strip tags from parts correctly", function(assert) {
 			"returns empty for invalid parts");
 });
 
+QUnit.test("parser should parse bpm sections correctly", function(assert) {
+	var bpmString = "0.000=136.000,100.000=68.000,124.000=136.000";
+	var bpms = Parser.getBpmsFromString(bpmString);
+	
+	assert.equal(Object.keys(bpms).length, 3,
+			"parsed all bpms");
+	assert.equal(bpms["0.000"], "136.000",
+			"parse section correctly");
+	assert.equal(bpms["100.000"], "68.000",
+		"parse section correctly");
+	assert.equal(bpms["124.000"], "136.000",
+		"parse section correctly");
+});
+
 var basicExampleSimFile = 
 	"#TITLE:Feels Just Like That Night;"+
 	"#SUBTITLE:subtitle test;                 "+
@@ -75,7 +89,10 @@ QUnit.test("parser should parse metadata correctly", function(assert) {
 			"artist correct");
 	assert.equal(simFile.credit, "credit person",
 			"credit correct");
-	assert.equal(simFile.bpms, "0.000=135.010", 
+	
+	assert.equal(Object.keys(simFile.bpms).length, 1,
+			"correct number of bpm sections");
+	assert.equal(simFile.bpms["0.000"], "135.010", 
 			"bpms correct");
 	
 	assert.equal(simFile.difficulties.length, 1,

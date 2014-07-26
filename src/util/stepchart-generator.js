@@ -23,7 +23,7 @@ StepChartGenerator.prototype.createStepChart = function(difficultyIndex,
 	}
 };
 
-var LENGTH_PER_MEASURE = 250;
+var LENGTH_PER_MEASURE = 500;
 
 StepChartGenerator.prototype.attachStylesToTable = function(bpm, targetTable) {
 	if (targetTable && targetTable.rows && this.difficulty) {

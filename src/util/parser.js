@@ -4,7 +4,9 @@
 
 parseSimFileContents = function(fileContents) {
 	var parser = new Parser(fileContents);
-	return parser.generateSimFile();
+	var simFile = parser.generateSimFile();
+	simFile.sortDifficulties();
+	return simFile;
 };
 
 
@@ -43,7 +45,7 @@ Parser.prototype.setDataBasedOnTag = function(part, simFile) {
 			simFile.credit = data;
 			break;
 		case "BPMS":
-			simFile.bpms = data;
+			simFile.bpms = Parser.getBpmsFromString(data);
 			break;
 		case "DISPLAYBPM":
 			simFile.displayBPM = data;
@@ -53,6 +55,8 @@ Parser.prototype.setDataBasedOnTag = function(part, simFile) {
 			break;
 	}
 };
+
+
 
 Parser.prototype.generateStepData = function(notesString, simFile) {
 	var difficultyParts = notesString.split(":");
@@ -90,7 +94,6 @@ Parser.prototype.parseMeasure = function(measureString, measureNumber, notesType
 };
 
 //static functions
-
 
 Parser.generateStepLine = function(rawData, previousLine, notesType, lineIndex, numberLinesInMeasure) {
 	var simFileLine = new SimFileLine();
@@ -180,6 +183,23 @@ Parser.getOrientationFromNotesTypeAndStepIndex = function(notesType, stepIndex) 
 	}
 };
 
+Parser.getBpmsFromString = function(bpmString) {
+	var bpmDict = {};
+	var bpmParts = bpmString.split(",");
+	for (var i = 0; i < bpmParts.length; i++) {
+		var bpmPart = bpmParts[i];
+		var pair = bpmPart.split("=");
+		if (pair.length != 2) {
+			console.log("WARNING: bpm read incorrectly");
+			continue;
+		}
+		var key = pair[0];
+		var value = pair[1];
+		bpmDict[key] = value;
+	}
+	
+	return bpmDict;
+};
 
 Parser.getTagFromPart = function(part) {
 	var indexOfColon = part.indexOf(":");
