@@ -64,12 +64,20 @@ StepChartGenerator.prototype._addStepChartLine = function(line, targetTable) {
 StepChartGenerator.prototype._addStepChartStep = function(step, targetRow) {
 
 	var tdStep = document.createElement("td");
-	if (step && step.type !== Type.NONE) {
-		var imgStep = document.createElement("img");
-		imgStep.className = this._getStepClass(step);
-		imgStep.src = this._getStepImageSource(step);
-
-		tdStep.appendChild(imgStep);
+	if (step) {
+		if (step.type == Type.FREEZE_START || step.type == Type.ROLL_START) { 
+			var backImage = document.createElement("img");
+			//using back image to not worry about z-indexing and for tiling
+			backImage.style.backgroundImage = "url('" + this._getStepBackgroundImageSource(step) + "')";
+			backImage.className = "bg";
+			tdStep.appendChild(backImage);
+		}
+		if (step.type == Type.REGULAR || step.type == Type.FREEZE_START || step.type == Type.ROLL_START) {
+			var imgStep = document.createElement("img");
+			imgStep.className = this._getStepClass(step);
+			imgStep.src = this._getStepImageSource(step);
+			tdStep.appendChild(imgStep);
+		}
 	}
 	targetRow.appendChild(tdStep);
 };
@@ -123,5 +131,26 @@ StepChartGenerator.prototype._getStepImageSource = function(step) {
 		break;
 	}
 
+	return BASE_IMAGE_DIRECTORY + imgName;
+};
+
+StepChartGenerator.prototype._getStepBackgroundImageSource = function(step) {
+	var imgName = "";
+	switch(step.type) {
+	case Type.FREEZE_START:
+	case Type.HOLDING:
+		imgName = "hold.png";
+		break;
+	case Type.FREEZE_END:
+		imgName = "hold_cap_bottom.png";
+		break;
+	case Type.ROLL_START:
+	case Type.ROLLING:
+		imgName = "roll.png";
+		break;
+	case Type.ROLL_END:
+		imgName = "roll_cap_bottom.png";
+	}
+	
 	return BASE_IMAGE_DIRECTORY + imgName;
 };

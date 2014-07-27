@@ -71,8 +71,6 @@
 <!-- 			</tr> -->
 <!-- 		</table> -->
 		
-		<table id="targetchart" class="stepchart">
-		</table>
 	</div>
 	
 	<script src="src/util/parser.js"></script>
@@ -84,19 +82,7 @@
 		function difficultySelected() {
 			if (simFile) {
 				var selectionIndex = document.getElementById("difficulty_picker").selectedIndex;
-				
-				var table = document.createElement("table");
-				table.id = "targetchart";
-				table.className = "stepchart";
-				attachStepChartToTable(simFile, selectionIndex, table);
-				
-				var drawArea = document.getElementById("draw_area");
-				while (drawArea.firstChild) {
-					drawArea.removeChild(drawArea.firstChild);
-				}				
-				drawArea.appendChild(table);
-				
-				console.log("changed difficulty " + drawArea.childNodes.length);
+				displayDifficulty(selectionIndex);
 			}
 		}
 	
@@ -114,11 +100,28 @@
 		
 		function fileFinishedLoading() {       
 	        simFile = parseSimFileContents(fr.result);
-           	var table = document.getElementById("targetchart");
+	        if (simFile) {	        	
+           		displayDifficulty(0);
+	        }
            	
            	MetadataManager.populateSongMetadataSection(simFile);
            	MetadataManager.populateDifficultySection(simFile);
-		 }  
+		 }
+		
+		function displayDifficulty(difficultyIndex) {
+			var table = document.createElement("table");
+			table.id = "targetchart";
+			table.className = "stepchart";
+			attachStepChartToTable(simFile, difficultyIndex, table);
+			
+			var drawArea = document.getElementById("draw_area");
+			while (drawArea.firstChild) {
+				drawArea.removeChild(drawArea.firstChild);
+			}				
+			drawArea.appendChild(table);
+			
+			console.log("showing difficulty " + simFile.difficulties[difficultyIndex].toString());
+		}
         
 	</script>
   </body>
