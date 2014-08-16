@@ -34,7 +34,7 @@
 				<tr>
 					<td class="metadata_label">Difficulty</td>
 					<td class="metadata">
-						<select id="difficulty_picker" onchange="difficultySelected()">
+						<select id="md_difficulty_picker" onchange="difficultySelected()">
 							<option>None</option>
 						</select>
 					</td>
@@ -82,7 +82,7 @@
 	<script>
 		function difficultySelected() {
 			if (simFile) {
-				var selectionIndex = document.getElementById("difficulty_picker").selectedIndex;
+				var selectionIndex = document.getElementById("md_difficulty_picker").selectedIndex;
 				displayDifficulty(selectionIndex);
 			}
 		}

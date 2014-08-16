@@ -1,4 +1,43 @@
 //
+// metadata-manager.js
+//
+
+(function(undefined) {
+	var simFile = parser.parseSimFileContents(TG.basicExampleSimFile);
+	
+	QUnit.module("metadata-manager.js", {});
+	
+	QUnit.test("song metadata should be correct", function(assert) {
+		var songMetadataDiv = document.createElement("div");
+		var createPWithId = function(id) {
+			var p = document.createElement("p");
+			p.id = id;
+			return p;
+		};
+		
+		var titleElement = createPWithId("md_title");
+		songMetadataDiv.appendChild(titleElement);
+		
+		var subtitleElement = createPWithId("md_subtitle");
+		songMetadataDiv.appendChild(subtitleElement);
+		
+		var artistElement = createPWithId("md_artist");
+		songMetadataDiv.appendChild(artistElement);
+		
+		document.body.appendChild(songMetadataDiv);
+		metadataManager.populateSongMetadataSection(simFile, songMetadataDiv);
+		document.body.removeChild(songMetadataDiv);
+
+		assert.equal(titleElement.innerHTML, simFile.title,
+				"title is correct");
+		assert.equal(subtitleElement.innerHTML, simFile.subtitle,
+				"subtitle is correct");
+		assert.equal(artistElement.innerHTML, SMP.asHTML(simFile.artist),
+				"artist is correct");
+	});
+})();
+
+//
 // stepchart-generator.js
 //
 

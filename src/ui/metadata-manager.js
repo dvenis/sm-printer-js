@@ -8,7 +8,7 @@
 	
 	metadataManager.populateDifficultySection = function(simFile) {
 		if (simFile.difficulties && simFile.difficulties.length) {
-			var difficultyPicker = document.getElementById("difficulty_picker");
+			var difficultyPicker = document.getElementById("md_difficulty_picker");
 			while(difficultyPicker.firstChild) {
 				difficultyPicker.removeChild(difficultyPicker.firstChild);
 			}
