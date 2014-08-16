@@ -73,6 +73,7 @@
 		
 	</div>
 	
+	<script src="src/SMP.js"></script>
 	<script src="src/util/parser.js"></script>
 	<script src="src/util/stepchart-generator.js"></script>
 	<script src="src/util/metadata-manager.js"></script>
@@ -99,7 +100,7 @@
 		}
 		
 		function fileFinishedLoading() {       
-	        simFile = parseSimFileContents(fr.result);
+	        simFile = parser.parseSimFileContents(fr.result);
 	        if (simFile) {	        	
            		displayDifficulty(6);
 	        }

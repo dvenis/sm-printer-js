@@ -1,0 +1,1 @@
+var SMP = (SMP = SMP || {});
