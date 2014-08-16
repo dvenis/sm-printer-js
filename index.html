@@ -75,8 +75,8 @@
 	
 	<script src="src/SMP.js"></script>
 	<script src="src/util/parser.js"></script>
-	<script src="src/util/stepchart-generator.js"></script>
-	<script src="src/util/metadata-manager.js"></script>
+	<script src="src/ui/stepchart-generator.js"></script>
+	<script src="src/ui/metadata-manager.js"></script>
 	<script src="src/models/sim-file.js"></script>
 
 	<script>
@@ -105,8 +105,8 @@
            		displayDifficulty(6);
 	        }
            	
-           	MetadataManager.populateSongMetadataSection(simFile);
-           	MetadataManager.populateDifficultySection(simFile);
+           	metadataManager.populateSongMetadataSection(simFile);
+           	metadataManager.populateDifficultySection(simFile);
 		 }
 		
 		function displayDifficulty(difficultyIndex) {
