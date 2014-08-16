@@ -114,6 +114,8 @@
 			table.id = "targetchart";
 			table.className = "stepchart";
 			stepChartGenerator.attachStepChartToTable(simFile, difficultyIndex, table);
+			var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, "targetchart");
+			document.head.appendChild(style);
 			
 			var drawArea = document.getElementById("draw_area");
 			while (drawArea.firstChild) {

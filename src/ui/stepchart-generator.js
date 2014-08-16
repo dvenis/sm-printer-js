@@ -18,32 +18,15 @@
 		}
 	};
 	
-	function attachStylesToTable(bpm, targetTable) {
-		if (targetTable && targetTable.rows && difficulty) {
-			var measureHeight = LENGTH_PER_MEASURE / 60 * bpm;
-			
-			var tableRowCount = 0;
-			for (var i = 0; i < difficulty.measures.length; i++) {
-				var measure = difficulty.measures[i];
-				var lineHeight = measureHeight / measure.lines.length;
-
-				 for (var j = 0; j < measure.lines.length; j++) {
-					 targetTable.rows[tableRowCount].style.height = lineHeight.toString() + "px";
-					 tableRowCount++;
-				 }
-			}
-		}
-	};
-	
-	function addStepChartMeasure(measure,
-			targetTable) {
+	function addStepChartMeasure(measure, targetTable) {
 		for (var i = 0; i < measure.lines.length; i++) {
-			addStepChartLine(measure.lines[i], targetTable);
+			addStepChartLine(measure.lines[i], measure.lines.length, targetTable);
 		}
 	};
 	
-	function addStepChartLine(line, targetTable) {
+	function addStepChartLine(line, numberOfLinesInMeasure, targetTable) {
 		var tr = document.createElement("tr");
+		tr.className = "L" + numberOfLinesInMeasure;
 
 		for (var i = 0; i < line.steps.length; i++) {
 			addStepChartStep(line.steps[i], tr);
@@ -142,6 +125,11 @@
 		return BASE_IMAGE_DIRECTORY + imgName;
 	};
 	
+	function makeStepRowStyle(bpm, stepLineLengthFactor, lengthClassSelector, tableId) {
+		var lineHeight = LENGTH_PER_MEASURE / 60 * bpm * stepLineLengthFactor;
+		return "#" + tableId + " ." + lengthClassSelector + " { height:" + lineHeight + "px; } ";
+	}
+	
 	//public:
 	
 	stepChartGenerator.attachStepChartToTable = function(_simFile, _difficultyIndex, _targetTable) {
@@ -150,18 +138,25 @@
 		targetTable = _targetTable;
 		
 		createStepChart(difficultyIndex, targetTable);
-		attachStylesToTable(60, targetTable);
+	};
+	
+	stepChartGenerator.getStepChartStyleSheet = function(simFile, bpm, targetTableId) {
+		var style = document.createElement("style");
+		style.type = "text/css";
+		var css = "";
+		
+		css += makeStepRowStyle(bpm, 1.0/4.0, "L4", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/8.0, "L8", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/12.0, "L12", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/16.0, "L16", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/24.0, "L24", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/32.0, "L32", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/48.0, "L48", targetTableId);
+		css += makeStepRowStyle(bpm, 1.0/64.0, "L64", targetTableId);
+		
+		style.appendChild(document.createTextNode(css));
+		
+		return style;
 	};
 	
 } (window.stepChartGenerator = window.stepChartGenerator || {}, SMP));
-
-
-
-
-
-function StepChartGenerator(simFile) {
-	this.simFile = simFile;
-
-	this.difficultyIndex = -1;
-	this.difficulty = null;
-}

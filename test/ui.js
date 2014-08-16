@@ -59,5 +59,11 @@
 				"fourth step is not defined");
 	});
 	
+	QUnit.test("stepchart styles should be made correctly", function(assert) {
+		var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, "sometable");
+
+		assert.equal(SMP.numberOccurencesOfSubstring(style.childNodes[0].nodeValue, "sometable"), 8,
+				"correct number of selectors");
+	});
 	
 })();

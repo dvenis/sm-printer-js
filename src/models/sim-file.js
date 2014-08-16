@@ -55,6 +55,27 @@ SimFileDifficulty.prototype.toString = function() {
 	return this.notesType + " - " + this.difficultyClass + " (" + this.difficultyMeter + ")";
 };
 
+SimFileDifficulty.prototype.getNumberOfLines = function() {
+	var count = 0;
+	for (var i = 0; i < this.measures.length; i++) {
+		count += this.measures[i].lines.length;
+	}
+	return count;
+};
+
+SimFileDifficulty.prototype.getLineAfter = function(measureIndex, lineIndex) {
+	var measure = this.measures[measureIndex];
+	lineIndex++;
+	while (lineIndex >= measure.lines.length) {
+		measureIndex++;
+		if (measureIndex >= this.measures.length) {
+			return null;
+		}
+		lineIndex = 0;
+		measure = this.measures[measureIndex];
+	}
+	return measure.lines[lineIndex];
+};
 
 //
 //Sim File measure defintions
@@ -84,6 +105,7 @@ SimFileMeasure.prototype.toString = function() {
 
 function SimFileLine() {
 	this.steps = [];
+	this.timing = null;
 }
 
 SimFileLine.prototype.toString = function() {

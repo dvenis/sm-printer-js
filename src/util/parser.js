@@ -89,6 +89,7 @@
 	function generateStepLine(rawData, previousLine, notesType, lineIndex, numberLinesInMeasure) {
 		var simFileLine = new SimFileLine();
 		var timing = getTimingFromIndexAndMeasureSize(lineIndex, numberLinesInMeasure);
+		simFileLine.timing = timing;
 		
 		if (previousLine && previousLine.steps) {
 			for (var i = 0; i < rawData.length; i++) {
