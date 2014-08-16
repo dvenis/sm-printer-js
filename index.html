@@ -113,7 +113,7 @@
 			var table = document.createElement("table");
 			table.id = "targetchart";
 			table.className = "stepchart";
-			attachStepChartToTable(simFile, difficultyIndex, table);
+			stepChartGenerator.attachStepChartToTable(simFile, difficultyIndex, table);
 			
 			var drawArea = document.getElementById("draw_area");
 			while (drawArea.firstChild) {

@@ -1,1 +1,1 @@
-var SMP = (SMP = SMP || {});
+var SMP = window.SMP = window.SMP || {};

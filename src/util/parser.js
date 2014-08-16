@@ -8,7 +8,7 @@
 	var META_DATA_REGEX = /#[\s\S]+?;/g; //regex for individual metadata parts
 	var STEP_LINE_REGEX = /[0-9MLF]{4,10}/g; //regex for each valid step line
 	
-	var previouslyAddedLine = undefined;
+	var previouslyAddedLine = null;
 	
 	function setDataBasedOnTag(part, simFile) {
 		var data = stripTagFromPart(part);
