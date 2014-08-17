@@ -27,3 +27,12 @@ SMP.numberOccurencesOfSubstring = function(string, subString){
     }
     return(n);
 };
+
+SMP.removeElementById = function(elementId) {
+	var element = document.getElementById(elementId);
+	if (element) {
+		element.parentNode.removeChild(element);
+		return element;
+	}
+	return null;
+};

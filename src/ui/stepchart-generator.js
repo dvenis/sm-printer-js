@@ -5,13 +5,7 @@
 	var LENGTH_PER_MEASURE = 500;
 	var BASE_IMAGE_DIRECTORY = "assets/notes/";
 	
-	var simFile = null;
-	var difficultyIndex = 0;
-	var difficulty = null;
-	var targetTable = null;
-	
-	function createStepChart() {
-		difficulty = simFile.difficulties[difficultyIndex];
+	function createStepChart(difficulty, targetTable) {
 
 		for (var i = 0; i < difficulty.measures.length; i++) {
 			addStepChartMeasure(difficulty.measures[i], targetTable);
@@ -132,12 +126,16 @@
 	
 	//public:
 	
-	stepChartGenerator.attachStepChartToTable = function(_simFile, _difficultyIndex, _targetTable) {
-		simFile = _simFile;
-		difficultyIndex = _difficultyIndex;
-		targetTable = _targetTable;
+	stepChartGenerator.getStepChartTable = function(simFile, difficultyIndex) {
+		var targetTable = document.createElement("table");
+		targetTable.className = "stepchart";
 		
-		createStepChart(difficultyIndex, targetTable);
+		var difficulty = simFile.difficulties[difficultyIndex];
+		if (difficulty) {
+			createStepChart(difficulty, targetTable);
+		}
+		
+		return targetTable;
 	};
 	
 	stepChartGenerator.getStepChartStyleSheet = function(simFile, bpm, targetTableId) {
