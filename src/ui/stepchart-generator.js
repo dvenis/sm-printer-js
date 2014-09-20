@@ -44,11 +44,18 @@
 			}
 			if (step.type == Type.FREEZE_START || step.type == Type.ROLL_START) { 
 				var backImage = document.createElement("img");
-				//using back image to not worry about z-indexing and for tiling
+				//using back image for tiling
 				backImage.style.backgroundImage = "url('" + getStepBackgroundImageSource(step) + "')";
-				backImage.className = "bg";
+				backImage.className = "bg hold";
 				var holdDuration = difficulty.getHoldDuration(measureIndex, lineIndex, stepIndex);
 				backImage.setAttribute("m_length", holdDuration);
+				tdStep.appendChild(backImage);
+				
+
+			} else if (step.type == Type.FREEZE_END || step.type == Type.ROLL_END) {
+				var backImage = document.createElement("img");
+				backImage.style.backgroundImage = "url('" + getStepBackgroundImageSource(step) + "')";
+				backImage.className = "bg hold_end";
 				tdStep.appendChild(backImage);
 			}
 		}
@@ -167,7 +174,10 @@
 		var f = targetTable.querySelectorAll(".bg");
 		for (var i = 0; i < f.length; i++) {
 			var e= f[i];
-			e.style.height = (e.getAttribute("m_length") * LENGTH_PER_MEASURE) + "px";
+			//check to see if it's full hold, or an end
+			if (e.getAttribute("m_length")) {
+				e.style.height = (e.getAttribute("m_length") * LENGTH_PER_MEASURE / 60 * bpm - 48) + "px";
+			}
 		}
 		
 		return style;

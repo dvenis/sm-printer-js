@@ -97,10 +97,19 @@ body {
 }
 
 .stepchart .bg {
-	top: -80px;
 	position: relative;
 	border: 2px solid yellow;
 	z-index: 3;
+}
+
+.stepchart .hold {
+	top: -80px;
+	height: 0px;
+}
+
+.stepchart .hold_end {
+	top:0px;
+	height: 64px;
 }
 
 .stepchart .d {
