@@ -74,11 +74,12 @@ body {
 }
 
 #draw_area td {
+	vertical-align: top;
 	z-index: 0;
 	border: 2px solid purple;
 	width: 136px;
 	height: 0px;
-		margin-top: -50%;
+	margin-top: -50%;
 	margin-bottom: -50%;
 }
  
@@ -86,18 +87,20 @@ body {
  	position: relative;
  	padding: 0px;
 	border: 2px solid blue;
-	diplay: inline-block; 
+	display: inline-block; 
 	height: 128px;
 	width: 128px;
 	opacity: 1;
-	margin-top: -50%;
-	margin-bottom: -50%;
+	margin-top: 0;
+	margin-bottom: 0;
+	z-index: 4;
 }
 
 .stepchart .bg {
-	top: 80px;
+	top: -80px;
 	position: relative;
 	border: 2px solid yellow;
+	z-index: 3;
 }
 
 .stepchart .d {

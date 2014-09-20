@@ -8,43 +8,48 @@
 	function createStepChart(difficulty, targetTable) {
 
 		for (var i = 0; i < difficulty.measures.length; i++) {
-			addStepChartMeasure(difficulty.measures[i], targetTable);
+			addStepChartMeasure(difficulty, i, targetTable);
 		}
 	};
 	
-	function addStepChartMeasure(measure, targetTable) {
+	function addStepChartMeasure(difficulty, measureIndex, targetTable) {
+		var measure = difficulty.measures[measureIndex];
 		for (var i = 0; i < measure.lines.length; i++) {
-			addStepChartLine(measure.lines[i], measure.lines.length, targetTable);
+			addStepChartLine(difficulty, measureIndex, i, targetTable);
 		}
 	};
 	
-	function addStepChartLine(line, numberOfLinesInMeasure, targetTable) {
+	function addStepChartLine(difficulty, measureIndex, lineIndex, targetTable) {
+		var line = difficulty.measures[measureIndex].lines[lineIndex];
 		var tr = document.createElement("tr");
-		tr.className = "L" + numberOfLinesInMeasure;
+		//set the length of each of the step lines based on number of lines in measure
+		tr.className = "L" + difficulty.measures[measureIndex].lines.length;
 
 		for (var i = 0; i < line.steps.length; i++) {
-			addStepChartStep(line.steps[i], tr);
+			addStepChartStep(difficulty, measureIndex, lineIndex, i, tr);
 		}
 
 		targetTable.appendChild(tr);
 	};
 	
-	function addStepChartStep(step, targetRow) {
-
+	function addStepChartStep(difficulty, measureIndex, lineIndex, stepIndex, targetRow) {
+		var step = difficulty.measures[measureIndex].lines[lineIndex].steps[stepIndex];
 		var tdStep = document.createElement("td");
 		if (step) {
-			if (step.type == Type.FREEZE_START || step.type == Type.ROLL_START) { 
-				var backImage = document.createElement("img");
-				//using back image to not worry about z-indexing and for tiling
-				backImage.style.backgroundImage = "url('" + getStepBackgroundImageSource(step) + "')";
-				backImage.className = "bg";
-				tdStep.appendChild(backImage);
-			}
 			if (step.type == Type.REGULAR || step.type == Type.FREEZE_START || step.type == Type.ROLL_START) {
 				var imgStep = document.createElement("img");
 				imgStep.className = getStepClass(step);
 				imgStep.src = getStepImageSource(step);
 				tdStep.appendChild(imgStep);
+			}
+			if (step.type == Type.FREEZE_START || step.type == Type.ROLL_START) { 
+				var backImage = document.createElement("img");
+				//using back image to not worry about z-indexing and for tiling
+				backImage.style.backgroundImage = "url('" + getStepBackgroundImageSource(step) + "')";
+				backImage.className = "bg";
+				var holdDuration = difficulty.getHoldDuration(measureIndex, lineIndex, stepIndex);
+				backImage.setAttribute("m_length", holdDuration);
+				tdStep.appendChild(backImage);
 			}
 		}
 		targetRow.appendChild(tdStep);
@@ -126,9 +131,10 @@
 	
 	//public:
 	
-	stepChartGenerator.getStepChartTable = function(simFile, difficultyIndex) {
+	stepChartGenerator.getStepChartTable = function(simFile, difficultyIndex, id) {
 		var targetTable = document.createElement("table");
 		targetTable.className = "stepchart";
+		targetTable.id = id;
 		
 		var difficulty = simFile.difficulties[difficultyIndex];
 		if (difficulty) {
@@ -138,8 +144,11 @@
 		return targetTable;
 	};
 	
-	stepChartGenerator.getStepChartStyleSheet = function(simFile, bpm, targetTableId) {
+	stepChartGenerator.getStepChartStyleSheet = function(simFile, bpm, targetTable) {
+		targetTableId = targetTable.id;
+		
 		var style = document.createElement("style");
+		style.id = targetTable.id + "_style";
 		style.type = "text/css";
 		var css = "";
 		
@@ -154,7 +163,22 @@
 		
 		style.appendChild(document.createTextNode(css));
 		
+		//JQUERY: possible replacement
+		var f = targetTable.querySelectorAll(".bg");
+		for (var i = 0; i < f.length; i++) {
+			var e= f[i];
+			e.style.height = (e.getAttribute("m_length") * LENGTH_PER_MEASURE) + "px";
+		}
+		
 		return style;
+	};
+	
+	stepChartGenerator.attachStepChartAndStyleToDocument = function(targetDiv, tableId, simFile, difficultyIndex) {
+		var targetTable = stepChartGenerator.getStepChartTable(simFile, difficultyIndex, tableId);
+		var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, targetTable);
+		
+		targetDiv.appendChild(targetTable);
+		document.head.appendChild(style);
 	};
 	
 } (window.stepChartGenerator = window.stepChartGenerator || {}, SMP));

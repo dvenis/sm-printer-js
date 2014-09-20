@@ -77,6 +77,32 @@ SimFileDifficulty.prototype.getLineAfter = function(measureIndex, lineIndex) {
 	return measure.lines[lineIndex];
 };
 
+SimFileDifficulty.prototype.getHoldDuration = function(measureIndex, lineIndex, stepIndex) {
+	var length = 0;
+	var step = this.measures[measureIndex].lines[lineIndex].steps[stepIndex];
+	
+	var measure = this.measures[measureIndex];
+
+	while (step.type == Type.HOLDING || step.type == Type.ROLLING 
+			|| step.type == Type.FREEZE_START || step.type == Type.ROLL_START) {
+		length += 1.0 / measure.lines.length;
+		lineIndex++;
+		
+		//check if line goes to the next measure
+		if (lineIndex >= measure.lines.length) {
+			lineIndex = 0;
+			measureIndex++;
+			measure = this.measures[measureIndex];
+		}
+		//check to make sure the simfile was created properly
+		if (measureIndex >= this.measures.length) {
+			return length;
+		}
+		step = this.measures[measureIndex].lines[lineIndex].steps[stepIndex];
+	}
+	return length;
+};
+
 //
 //Sim File measure defintions
 //
@@ -100,12 +126,14 @@ SimFileMeasure.prototype.toString = function() {
 };
 
 //
-//Sim File line defintions
+//Sim File line definitions
 //
 
 function SimFileLine() {
 	this.steps = [];
 	this.timing = null;
+	// number of lines in the parent measure
+	this.measureTiming = null;
 }
 
 SimFileLine.prototype.toString = function() {

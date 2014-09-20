@@ -22,4 +22,11 @@
 		assert.equal(simFile.difficulties[0].getLineAfter(1, 3), null,
 				"returns null when not found");
 	});
+	
+	QUnit.test("calculates the total hold duration correctly",  function(assert) {
+		assert.equal(simFile.difficulties[0].getHoldDuration(0, 1, 0), 1.0/4.0, 
+				"duration correct");
+		assert.equal(simFile.difficulties[0].getHoldDuration(0, 1, 2), 4.0/4.0,
+				"duration correct over multiple measures");
+	});
 })();

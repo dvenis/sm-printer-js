@@ -43,8 +43,8 @@
 
 (function(undefined) {
 	var simFile = parser.parseSimFileContents(TG.basicExampleSimFile);
-	var table = document.createElement("table");
-	stepChartGenerator.attachStepChartToTable(simFile, 0, table);
+	var table = stepChartGenerator.getStepChartTable(simFile, 0, "test_table");
+	var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, table);
 	
 	QUnit.module("stepchart-generator.js", {});
 	
@@ -60,9 +60,8 @@
 	});
 	
 	QUnit.test("stepchart styles should be made correctly", function(assert) {
-		var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, "sometable");
 
-		assert.equal(SMP.numberOccurencesOfSubstring(style.childNodes[0].nodeValue, "sometable"), 8,
+		assert.equal(SMP.numberOccurencesOfSubstring(style.childNodes[0].nodeValue, "test_table"), 8,
 				"correct number of selectors");
 	});
 	
