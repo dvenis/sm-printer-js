@@ -110,18 +110,13 @@
 		 }
 		
 		function displayDifficulty(difficultyIndex) {
-			var table = stepChartGenerator.getStepChartTable(simFile, difficultyIndex);
-			table.id = "targetchart";
-		
-			var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, "targetchart");
-			style.id = "targetchart_style";
 			
 			SMP.removeElementById("targetchart");
 			SMP.removeElementById("targetchart_style");
 			
 			var drawArea = document.getElementById("draw_area");
-			drawArea.appendChild(table);
-			document.head.appendChild(style);
+
+			stepChartGenerator.attachStepChartAndStyleToDocument(drawArea, "targetchart", simFile, difficultyIndex);
 			
 			console.log("showing difficulty " + simFile.difficulties[difficultyIndex].toString());
 		}
