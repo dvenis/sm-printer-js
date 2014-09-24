@@ -5,8 +5,15 @@
 	var MEASURE_LENGTH_PER_BPM = 10;
 	var BASE_IMAGE_DIRECTORY = "assets/notes/";
 	
+	function createStepChartBackground(difficulty, tableBody) {
+		for (var i = 0; i < difficulty.measures.length * 4; i++) {
+			var row = document.createElement("tr");
+			row.className = "m_sep";
+			tableBody.appendChild(row);
+		}
+	}
+	
 	function createStepChart(difficulty, targetTable) {
-
 		for (var i = 0; i < difficulty.measures.length; i++) {
 			addStepChartMeasure(difficulty, i, targetTable);
 		}
@@ -133,7 +140,7 @@
 	
 	function makeStepRowStyle(bpm, stepLineLengthFactor, lengthClassSelector, tableId) {
 		var lineHeight = MEASURE_LENGTH_PER_BPM * bpm * stepLineLengthFactor;
-		return "#" + tableId + " ." + lengthClassSelector + " { height:" + lineHeight + "px; } ";
+		return "." + lengthClassSelector + "{height:" + lineHeight + "px;}";
 	}
 	
 	function getHoldPixelLength(holdElement, bpm) {
@@ -145,16 +152,33 @@
 	
 	//public:
 	
+	stepChartGenerator.getStepChartBackgroundTable = function(simFile, difficultyIndex, targetTable) {
+		var backgroundTable = document.createElement("table");
+		backgroundTable.className = "stepchart_background";
+		backgroundTable.id = targetTable.id + "_background";
+		var tableBody = document.createElement("tbody");
+		backgroundTable.appendChild(tableBody);
+		
+		var difficulty = simFile.difficulties[difficultyIndex];
+		if (difficulty) {
+			createStepChartBackground(difficulty, tableBody);
+		}
+		
+		return backgroundTable;
+	};
+	
 	// Creates a table element that contains all the step chart info using the difficulty specified by
 	// the difficultyIndex and simFile. The id of the table is set to the passed in id. 
 	stepChartGenerator.getStepChartTable = function(simFile, difficultyIndex, id) {
 		var targetTable = document.createElement("table");
 		targetTable.className = "stepchart";
 		targetTable.id = id;
+		var tableBody = document.createElement("tbody");
+		targetTable.appendChild(tableBody);
 		
 		var difficulty = simFile.difficulties[difficultyIndex];
 		if (difficulty) {
-			createStepChart(difficulty, targetTable);
+			createStepChart(difficulty, tableBody);
 		}
 		
 		return targetTable;
@@ -178,6 +202,10 @@
 		css += makeStepRowStyle(bpm, 1.0/32.0, "L32", targetTableId);
 		css += makeStepRowStyle(bpm, 1.0/48.0, "L48", targetTableId);
 		css += makeStepRowStyle(bpm, 1.0/64.0, "L64", targetTableId);
+		
+		var separatorHeight = MEASURE_LENGTH_PER_BPM * bpm / 4.0 - 2;
+		css += ".m_sep {height:" + separatorHeight + "px;}";
+		css += ".stepchart_background {top:" + (separatorHeight / 2 - 6) + "px;}";
 		
 		style.appendChild(document.createTextNode(css));
 		
@@ -203,9 +231,11 @@
 	// attaches the style sheet to the document head.
 	stepChartGenerator.attachStepChartAndStyleToDocument = function(targetDiv, tableId, simFile, difficultyIndex) {
 		var targetTable = stepChartGenerator.getStepChartTable(simFile, difficultyIndex, tableId);
+		var backgroundTable = stepChartGenerator.getStepChartBackgroundTable(simFile, difficultyIndex, targetTable);
 		var style = stepChartGenerator.getStepChartStyleSheet(simFile, 60, targetTable);
 		stepChartGenerator.setHoldStyles(simFile, 60, targetTable);
 		
+		targetDiv.appendChild(backgroundTable);
 		targetDiv.appendChild(targetTable);
 		document.head.appendChild(style);
 	};

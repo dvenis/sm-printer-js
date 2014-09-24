@@ -1,5 +1,5 @@
 body {
-	width: 1150px;
+	width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -57,26 +57,36 @@ body {
  
  #draw_area {
  	float: right;
- 	width: 800px;
+/*  	width: 800px; */
  	height: 50px;
+ 	position: relative;
  }
  
- #draw_area table {
-	width: 100%;
+ .stepchart {
 	height: 100%;
-	border: 2px solid green;
+/* 	border: 2px solid green; */
 }
 
-#draw_area tr {
-	border: 2px solid red;
-	height: 40px;
+.stepchart_background {
+	position: absolute;
+	height: initial;
+	width: 100%;
+}
+
+.stepchart_background tr {
+	border-top: 2px solid black;
 	display: block;
 }
 
-#draw_area td {
+.stepchart tr {
+/* 	border: 2px solid red; */
+	display: block;
+}
+
+.stepchart td {
 	vertical-align: top;
 	z-index: 0;
-	border: 2px solid purple;
+/* 	border: 2px solid purple; */
 	width: 136px;
 	height: 0px;
 	margin-top: -50%;
@@ -86,7 +96,7 @@ body {
  .stepchart img { 
  	position: relative;
  	padding: 0px;
-	border: 2px solid blue;
+/* 	border: 2px solid blue; */
 	display: inline-block; 
 	height: 128px;
 	width: 128px;
@@ -98,7 +108,7 @@ body {
 
 .stepchart .bg {
 	position: relative;
-	border: 2px solid yellow;
+/* 	border: 2px solid yellow; */
 	z-index: 3;
 }
 
@@ -108,7 +118,7 @@ body {
 }
 
 .stepchart .hold_end {
-	top:0px;
+	top:2px;
 	height: 64px;
 }
 

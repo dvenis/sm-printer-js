@@ -44,32 +44,6 @@
 	</div>
 	
 	<div id="draw_area">
-<!-- 		<table id="test" class="stepchart"> -->
-<!-- 			<tr> -->
-<!-- 				<td><img class="l" src="assets/4th.png"></td> -->
-<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
-<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
-<!-- 				<td><img class="r" src="assets/4th.png"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td></td>  -->
-<!-- 				<td></td> -->
-<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
-<!-- 				<td><img class="r" src="assets/4th.png"></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td></td>  -->
-<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
-<!-- 				<td><img class="u" src="assets/4th.png"></td> -->
-<!-- 				<td></td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td></td>  -->
-<!-- 				<td><img class="d" src="assets/4th.png"></td> -->
-<!-- 				<td></td> -->
-<!-- 				<td></td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
 		
 	</div>
 	
@@ -112,6 +86,7 @@
 		function displayDifficulty(difficultyIndex) {
 			
 			SMP.removeElementById("targetchart");
+			SMP.removeElementById("targetchart_background");
 			SMP.removeElementById("targetchart_style");
 			
 			var drawArea = document.getElementById("draw_area");
