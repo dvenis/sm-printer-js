@@ -62,7 +62,7 @@
 	QUnit.test("stepchart styles should be made correctly", function(assert) {
 		assert.equal(style.id, table.id + "_style",
 				"style sheet has correct id");
-		assert.equal(SMP.numberOccurencesOfSubstring(style.childNodes[0].nodeValue, "table"), 9,
+		assert.equal(SMP.numberOccurencesOfSubstring(style.childNodes[0].nodeValue, "table"), 10,
 				"correct number of selectors");
 	});
 	
