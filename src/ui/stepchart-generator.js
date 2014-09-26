@@ -9,7 +9,23 @@
 		for (var i = 0; i < difficulty.measures.length * 4; i++) {
 			var row = document.createElement("tr");
 			row.className = "m_sep";
-			if (!i%4) row.className += " t";
+			
+			if (i%4 == 0) {
+				//thick line
+				row.className += " t";
+				
+				//create measure number
+				var cell = document.createElement("td");
+				cell.className = "m_num";
+				cell.id = "m_" + (i/4 + 1);
+				
+				var span = document.createElement("span");
+				span.innerHTML = (i/4 + 1);
+				
+				cell.appendChild(span);
+				row.appendChild(cell);
+			}
+			
 			tableBody.appendChild(row);
 		}
 	}
