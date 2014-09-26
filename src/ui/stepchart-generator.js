@@ -9,6 +9,7 @@
 		for (var i = 0; i < difficulty.measures.length * 4; i++) {
 			var row = document.createElement("tr");
 			row.className = "m_sep";
+			if (!i%4) row.className += " t";
 			tableBody.appendChild(row);
 		}
 	}
@@ -140,7 +141,7 @@
 	
 	function makeStepRowStyle(bpm, stepLineLengthFactor, lengthClassSelector, tableId) {
 		var lineHeight = MEASURE_LENGTH_PER_BPM * bpm * stepLineLengthFactor;
-		return "." + lengthClassSelector + "{height:" + lineHeight + "px;}";
+		return "table ." + lengthClassSelector + "{height:" + lineHeight + "px;}";
 	}
 	
 	function getHoldPixelLength(holdElement, bpm) {
@@ -204,7 +205,7 @@
 		css += makeStepRowStyle(bpm, 1.0/64.0, "L64", targetTableId);
 		
 		var separatorHeight = MEASURE_LENGTH_PER_BPM * bpm / 4.0 - 2;
-		css += ".m_sep {height:" + separatorHeight + "px;}";
+		css += "table .m_sep {height:" + separatorHeight + "px;}";
 		css += ".stepchart_background {top:" + (separatorHeight / 2 - 6) + "px;}";
 		
 		style.appendChild(document.createTextNode(css));

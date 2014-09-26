@@ -1,5 +1,11 @@
 body {
-	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#pg_container {
+	width: 1522px;
+	position: relative;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -9,10 +15,9 @@ body {
  */
 
 #section_metadata {
-	float: left;
 	width: 300px;
-	margin-left: auto;
-	margin-right: auto;
+/* 	margin-left: auto; */
+/* 	margin-right: auto; */
 	padding: 10px;
 	
 	background-color: aqua;
@@ -56,14 +61,14 @@ body {
  */
  
  #draw_area {
- 	float: right;
-/*  	width: 800px; */
- 	height: 50px;
- 	position: relative;
+	position: absolute;
+	left: 350px;
+	top: 0px;
  }
  
  .stepchart {
 	height: 100%;
+	width: 100%;
 /* 	border: 2px solid green; */
 }
 
@@ -73,8 +78,15 @@ body {
 	width: 100%;
 }
 
-.stepchart_background tr {
+.stepchart_background .m_sep.t {
 	border-top: 2px solid black;
+}
+
+.stepchart_background .m_sep {
+	border-top: 1px solid black;
+}
+
+.stepchart_background tr {
 	display: block;
 }
 

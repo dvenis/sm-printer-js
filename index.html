@@ -10,41 +10,43 @@
 	<input type="file" id="file_selector" onchange="handleFile()"></input>
 	
 
+	<div id="pg_container">
 	
-	<div id="section_metadata">
-		<div id="song_metadata">
-			<table class="metadata_table">
-				<tr>
-					<td class="metadata_label">Title</td>
-					<td id="md_title" class="metadata">empty title</td>
-				</tr>
-				<tr>
-					<td class="metadata_label">Subtitle</td>
-					<td id="md_subtitle" class="metadata">empty subtitle</td>
-				</tr>
-				<tr>
-					<td class="metadata_label">Artist</td>
-					<td id="md_artist" class="metadata">empty artist</td>
-				</tr>
-			</table>
+		<div id="section_metadata">
+			<div id="song_metadata">
+				<table class="metadata_table">
+					<tr>
+						<td class="metadata_label">Title</td>
+						<td id="md_title" class="metadata">empty title</td>
+					</tr>
+					<tr>
+						<td class="metadata_label">Subtitle</td>
+						<td id="md_subtitle" class="metadata">empty subtitle</td>
+					</tr>
+					<tr>
+						<td class="metadata_label">Artist</td>
+						<td id="md_artist" class="metadata">empty artist</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div id="difficulty_metadata">
+				<table class="metadata_table">
+					<tr>
+						<td class="metadata_label">Difficulty</td>
+						<td class="metadata">
+							<select id="md_difficulty_picker" onchange="difficultySelected()">
+								<option>None</option>
+							</select>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 		
-		<div id="difficulty_metadata">
-			<table class="metadata_table">
-				<tr>
-					<td class="metadata_label">Difficulty</td>
-					<td class="metadata">
-						<select id="md_difficulty_picker" onchange="difficultySelected()">
-							<option>None</option>
-						</select>
-					</td>
-				</tr>
-			</table>
+		<div id="draw_area">
+			
 		</div>
-	</div>
-	
-	<div id="draw_area">
-		
 	</div>
 	
 	<script src="src/SMP.js"></script>
