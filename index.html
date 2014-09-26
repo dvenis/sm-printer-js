@@ -7,40 +7,49 @@
   </head>
 
   <body>
-	<input type="file" id="file_selector" onchange="handleFile()"></input>
+	
 	
 
 	<div id="pg_container">
 	
 		<div id="section_metadata">
-			<div id="song_metadata">
-				<table class="metadata_table">
-					<tr>
-						<td class="metadata_label">Title</td>
-						<td id="md_title" class="metadata">empty title</td>
-					</tr>
-					<tr>
-						<td class="metadata_label">Subtitle</td>
-						<td id="md_subtitle" class="metadata">empty subtitle</td>
-					</tr>
-					<tr>
-						<td class="metadata_label">Artist</td>
-						<td id="md_artist" class="metadata">empty artist</td>
-					</tr>
-				</table>
+		
+			<div id="song_controls" class="md_part">
+				<ul>
+					<li>
+						<div class="label">SimFile</div>
+						<input type="file" id="file_selector" onchange="handleFile()"></input>
+					</li>
+					
+				</ul>
+			</div>
+		
+			<div id="song_metadata" class="md_part">
+				<ul>
+					<li>
+						<div class="label">Title</div>
+						<div id="md_title">empty title</div>
+					</li>
+					<li>
+						<div class="label">Subtitle</div>
+						<div id="md_subtitle">empty subtitle</div>
+					</li>
+					<li>
+						<div class="label">Artist</div>
+						<div id="md_artist">empty artist</div>
+					</li>
+				</ul>
 			</div>
 			
-			<div id="difficulty_metadata">
-				<table class="metadata_table">
-					<tr>
-						<td class="metadata_label">Difficulty</td>
-						<td class="metadata">
-							<select id="md_difficulty_picker" onchange="difficultySelected()">
-								<option>None</option>
-							</select>
-						</td>
-					</tr>
-				</table>
+			<div id="difficulty_metadata" class="md_part">
+				<ul>
+					<li>
+						<div class="label">Difficulty</div>
+						<select id="md_difficulty_picker" onchange="difficultySelected()">
+							<option>None</option>
+						</select>
+					</li>
+				</ul>
 			</div>
 		</div>
 		

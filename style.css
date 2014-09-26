@@ -19,41 +19,40 @@ body {
 
 #section_metadata {
 	width: 300px;
-/* 	margin-left: auto; */
-/* 	margin-right: auto; */
 	padding: 10px;
-	
-	background-color: aqua;
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 2px #ddd;
 }
 
-#song_metadata {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	background-color :#dddddd;
+#section_metadata > :first-child {
+	border-top: 0;
 }
 
-#difficulty_metadata {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	background-color: #ddd;
+.md_part {
+	border-top: 1px solid #ddd;
+	padding: 10px;
+	position: relative;
 }
 
-#section_metadata .metadata_table tr {
+.md_part ul {
 	width: 100%;
+	padding: 0;
+	margin: 0;
 }
 
-#section_metadata .metadata_table td {
-	padding: 2px 10px;
+.md_part ul li {
+	list-style-type: none;
+	padding: 5px;
 }
 
-.metadata_label {
-	text-align: right;
-	font-weight: bold;
+.md_part ul li div {
+	margin: 2px 0px;
 }
 
-.metadata {
+.md_part ul li .label {
 	text-align: left;
-	font-weight: plain;
+	font-weight: bold;
+	font-size: 0.8em;
 }
 
 
