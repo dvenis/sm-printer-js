@@ -56,7 +56,9 @@ body {
 	width: 300px;
 	padding: 10px;
 	margin-right: 40px;
-
+	/*values to be set when scrolling*/
+	top: 0px;
+	position: relative;
 }
 
 #section_metadata > :first-child {

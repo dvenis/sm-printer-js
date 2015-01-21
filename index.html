@@ -80,15 +80,29 @@
 	<script src="src/models/sim-file.js"></script>
 
 	<script>
+		//global variable for current simfile parameters;
+		var currentSelection = {
+			simFile : null,
+			difficulty : null,
+			difficultyIndex : null
+		};
 	
 		//callback handlers
 		
 		window.onscroll = function() {
-			console.log("scrolled: " + window.pageYOffset);
+			var offset = window.pageYOffset;			
+			var metadata = document.getElementById("section_metadata");
+			if (offset > 50) {
+				metadata.style.position = "fixed";
+				metadata.style.top = "20px";
+			} else {
+				metadata.style.position = "relative";
+				metadata.style.top = "0px";
+			}
 		}
 		
 		function difficultySelected() {
-			if (simFile) {
+			if (currentSelection.simFile) {
 				var selectionIndex = document.getElementById("md_difficulty_picker").selectedIndex;
 				displayDifficulty(selectionIndex);
 			}
@@ -97,23 +111,34 @@
 		function measureSelected() {
 			var measureSelectionSpinner = document.getElementById("md_measure_spinner");
 			var val = measureSelectionSpinner.value;
-			if (val && typeof simFile !== 'undefined') {
-				if (val > simFile.difficulties.length) {
-					val = simFile.difficulties.length;
+			if (val && currentSelection.simFile) {
+				var numMeasures = currentSelection.difficulty.measures.length;
+				if (val > numMeasures) {
+					val = numMeasures;
 				}
 				if ( val < 1) {
 					val = 1;
 				}
-				measureSelectionSpinner.value = val;
-				window.location.hash = '#m_' + val;
+				scrollToMeasure(val, measureSelectionSpinner);
 			}
 		}
 		
-		function approachRateSelected() {
-			var val = document.getElementById("md_approach_rate_picker").value;
-			console.log("approach rate selected (" + val + ")");
+		function scrollToMeasure(measureIndex, measureSelectionSpinner) {
+			//pass the spinner in if available; otherwise we get it here
+			if (!measureSelectionSpinner) {
+				measureSelectionSpinner = document.getElementById("md_measure_spinner");
+			}
+			measureSelectionSpinner.value = measureIndex;
+			window.location.hash = '#m_' + measureIndex;
+			//move slightly above the measure for better visibility
+			window.scrollBy(0, -100);
 		}
-	
+		
+		function scrollToTop() {
+			window.location.hash = "";
+			window.scrollTo(window.pageXOffset, 0);
+		}
+		
 		function handleFile() {
 			getFileContents();
 		}
@@ -127,13 +152,16 @@
 		}
 		
 		function fileFinishedLoading() {       
-	        simFile = parser.parseSimFileContents(fr.result);
-	        if (simFile) {	        	
-           		displayDifficulty(6);
-	        }
+	        var simFile = parser.parseSimFileContents(fr.result);
            	
            	metadataManager.populateSongMetadataSection(simFile);
            	metadataManager.populateDifficultySection(simFile);
+           	
+           	currentSelection.simFile = simFile;
+           	
+	        if (simFile) {	        	
+           		displayDifficulty(0);
+	        }
 		 }
 		
 		function displayDifficulty(difficultyIndex) {
@@ -142,11 +170,16 @@
 			SMP.removeElementById("targetchart_background");
 			SMP.removeElementById("targetchart_style");
 			
+			currentSelection.difficultyIndex = difficultyIndex;
+			currentSelection.difficulty = currentSelection.simFile.difficulties[difficultyIndex];
+			
 			var drawArea = document.getElementById("draw_area");
 
-			stepChartGenerator.attachStepChartAndStyleToDocument(drawArea, "targetchart", simFile, difficultyIndex);
+			stepChartGenerator.attachStepChartAndStyleToDocument(drawArea, "targetchart",
+					currentSelection.simFile, difficultyIndex);
+			scrollToTop();
 			
-			console.log("showing difficulty " + simFile.difficulties[difficultyIndex].toString());
+			console.log("showing difficulty " + currentSelection.difficulty.toString());
 		}
         
 		
