@@ -1,1 +1,188 @@
-index.html here. test.
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <title>Sim File Parser</title>
+ 
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+
+  <body>
+	
+	<div id="header">
+		<div>sm-printer-js</div>
+	</div>
+
+	<div id="pg_container">
+		<div id="section_metadata">
+		
+			<div id="song_controls" class="md_part">
+				<ul>
+					<li>
+						<div class="label">SimFile</div>
+						<input type="file" id="file_selector" onchange="handleFile()"></input>
+					</li>
+					
+				</ul>
+			</div>
+		
+			<div id="song_metadata" class="md_part">
+				<ul>
+					<li>
+						<div class="label">Title</div>
+						<div id="md_title">empty title</div>
+					</li>
+					<li>
+						<div class="label">Subtitle</div>
+						<div id="md_subtitle">empty subtitle</div>
+					</li>
+					<li>
+						<div class="label">Artist</div>
+						<div id="md_artist">empty artist</div>
+					</li>
+				</ul>
+			</div>
+			
+			<div id="difficulty_metadata" class="md_part">
+				<ul>
+					<li>
+						<div class="label">Difficulty</div>
+						<select id="md_difficulty_picker" onchange="difficultySelected()">
+							<option>None</option>
+						</select>
+					</li>
+					<li>
+						<div class="label">Measure</div>
+						<input type="number" id="md_measure_spinner" onchange="measureSelected()">
+					</li>
+<!-- 					<li> -->
+<!-- 						<div class="label">Approach Rate</div> -->
+<!-- 						<select id="md_approach_rate_picker" onchange="approachRateSelected()"> -->
+<!-- 							<option>0.5x</option> -->
+<!-- 							<option>1.0x</option> -->
+<!-- 							<option>2.0x</option>							 -->
+<!-- 						</select> -->
+<!-- 					</li> -->
+				</ul>
+			</div>
+			<div>
+			</div>
+		</div>
+		
+		<div id="draw_area">
+			
+		</div>
+	</div>
+	
+	<script src="src/SMP.js"></script>
+	<script src="src/util/parser.js"></script>
+	<script src="src/ui/stepchart-generator.js"></script>
+	<script src="src/ui/metadata-manager.js"></script>
+	<script src="src/models/sim-file.js"></script>
+
+	<script>
+		//global variable for current simfile parameters;
+		var currentSelection = {
+			simFile : null,
+			difficulty : null,
+			difficultyIndex : null
+		};
+	
+		//callback handlers
+		
+		window.onscroll = function() {
+			var offset = window.pageYOffset;			
+			var metadata = document.getElementById("section_metadata");
+			if (offset > 50) {
+				metadata.style.position = "fixed";
+				metadata.style.top = "20px";
+			} else {
+				metadata.style.position = "relative";
+				metadata.style.top = "0px";
+			}
+		}
+		
+		function difficultySelected() {
+			if (currentSelection.simFile) {
+				var selectionIndex = document.getElementById("md_difficulty_picker").selectedIndex;
+				displayDifficulty(selectionIndex);
+			}
+		}
+		
+		function measureSelected() {
+			var measureSelectionSpinner = document.getElementById("md_measure_spinner");
+			var val = measureSelectionSpinner.value;
+			if (val && currentSelection.simFile) {
+				var numMeasures = currentSelection.difficulty.measures.length;
+				if (val > numMeasures) {
+					val = numMeasures;
+				}
+				if ( val < 1) {
+					val = 1;
+				}
+				scrollToMeasure(val, measureSelectionSpinner);
+			}
+		}
+		
+		function scrollToMeasure(measureIndex, measureSelectionSpinner) {
+			//pass the spinner in if available; otherwise we get it here
+			if (!measureSelectionSpinner) {
+				measureSelectionSpinner = document.getElementById("md_measure_spinner");
+			}
+			measureSelectionSpinner.value = measureIndex;
+			window.location.hash = '#m_' + measureIndex;
+			//move slightly above the measure for better visibility
+			window.scrollBy(0, -100);
+		}
+		
+		function scrollToTop() {
+			window.location.hash = "";
+			window.scrollTo(window.pageXOffset, 0);
+		}
+		
+		function handleFile() {
+			getFileContents();
+		}
+		
+		function getFileContents() {
+			input = document.getElementById('file_selector');
+			file = input.files[0];
+			fr = new FileReader();
+			fr.onload = fileFinishedLoading;
+			fr.readAsText(file);
+		}
+		
+		function fileFinishedLoading() {       
+	        var simFile = parser.parseSimFileContents(fr.result);
+           	
+           	metadataManager.populateSongMetadataSection(simFile);
+           	metadataManager.populateDifficultySection(simFile);
+           	
+           	currentSelection.simFile = simFile;
+           	
+	        if (simFile) {	        	
+           		displayDifficulty(0);
+	        }
+		 }
+		
+		function displayDifficulty(difficultyIndex) {
+			
+			SMP.removeElementById("targetchart");
+			SMP.removeElementById("targetchart_background");
+			SMP.removeElementById("targetchart_style");
+			
+			currentSelection.difficultyIndex = difficultyIndex;
+			currentSelection.difficulty = currentSelection.simFile.difficulties[difficultyIndex];
+			
+			var drawArea = document.getElementById("draw_area");
+
+			stepChartGenerator.attachStepChartAndStyleToDocument(drawArea, "targetchart",
+					currentSelection.simFile, difficultyIndex);
+			scrollToTop();
+			
+			console.log("showing difficulty " + currentSelection.difficulty.toString());
+		}
+        
+		
+	</script>
+  </body>
+</html>

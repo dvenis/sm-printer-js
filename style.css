@@ -1,0 +1,216 @@
+body {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	margin-bottom: 0;
+		
+	font-family: sans-serif;
+	font-size: 1em;
+}
+
+#pg_container {
+	width: 1522px;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-top: 20px;
+	
+	padding: 0 20px 0 20px;
+}
+
+#pg_container > div {
+	border: 1px solid #ddd;
+	box-shadow: 0px 0px 2px #ddd;
+}
+
+/*
+ * Header
+ */
+ 
+#header {
+	height: 50px;
+	line-height: 50px;
+	width: 100%;
+	margin:0px 0px 20px 0px;
+	
+	vertical-align: center;
+	font-size: 2em;
+	font-weight: bold;
+	background-color: #A7D1FF;
+	color: black;
+}
+
+#header div {
+	width: 1522px;
+	padding: 0 20px 0 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*
+ * Metadata styles
+ */
+
+#section_metadata {
+	width: 300px;
+	padding: 10px;
+	margin-right: 40px;
+	/*values to be set when scrolling*/
+	top: 0px;
+	position: relative;
+}
+
+#section_metadata > :first-child {
+	border-top: 0;
+}
+
+.md_part {
+	border-top: 1px solid #ddd;
+	padding: 10px;
+	position: relative;
+}
+
+.md_part ul {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.md_part ul li {
+	list-style-type: none;
+	padding: 5px;
+}
+
+.md_part ul li div {
+	margin: 2px 0px;
+}
+
+.md_part ul li .label {
+	text-align: left;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+
+/*
+ * Display area styles
+ */
+ 
+ #draw_area {
+	position: absolute;
+	left: 370px;
+	top: 0px;
+ }
+ 
+ 
+ /*
+  * Stepchart background styles
+  */
+  
+.stepchart_background {
+	position: absolute;
+	height: initial;
+	width: 100%;
+}
+
+.stepchart_background .m_sep.t {
+	border-top: 2px solid #666;
+}
+
+.stepchart_background .m_sep {
+	border-top: 1px solid #666;
+}
+
+.stepchart_background tr {
+	display: block;
+}
+
+td.m_num {
+	text-align: right;
+	width: 50px;
+}
+
+.m_num span {
+	font-size: 1.3em;
+	
+	margin-right: 10px;
+	position: relative;
+	bottom: 16px;
+	right: 50px;
+}
+
+/*
+ * Stepchart styles
+ */
+ 
+ .stepchart {
+	height: 100%;
+	width: 100%;
+/* 	border: 2px solid green; */
+}
+
+.stepchart tr {
+/* 	border: 2px solid red; */
+	display: block;
+}
+
+.stepchart td {
+	vertical-align: top;
+	z-index: 0;
+/* 	border: 2px solid purple; */
+	width: 136px;
+	height: 0px;
+	margin-top: -50%;
+	margin-bottom: -50%;
+}
+ 
+ .stepchart img { 
+ 	position: relative;
+ 	padding: 0px;
+/* 	border: 2px solid blue; */
+	display: inline-block; 
+	height: 128px;
+	width: 128px;
+	opacity: 1;
+	margin-top: 0;
+	margin-bottom: 0;
+	z-index: 4;
+}
+
+.stepchart .bg {
+	position: relative;
+/* 	border: 2px solid yellow; */
+	z-index: 3;
+}
+
+.stepchart .hold {
+	top: -80px;
+	height: 0px;
+}
+
+.stepchart .hold_end {
+	top:2px;
+	height: 64px;
+}
+
+.stepchart .d {
+}
+
+.stepchart .r {
+	transform:rotate(-90deg);
+	-ms-transform:rotate(-90deg); /* IE 9 */
+	-webkit-transform:rotate(-90deg); /* Opera, Chrome, and Safari */
+}
+
+.stepchart .l {
+	transform:rotate(90deg);
+	-ms-transform:rotate(90deg); /* IE 9 */
+	-webkit-transform:rotate(90deg); /* Opera, Chrome, and Safari */
+}
+
+.stepchart .u {
+	transform:rotate(180deg);
+	-ms-transform:rotate(180deg); /* IE 9 */
+	-webkit-transform:rotate(180deg); /* Opera, Chrome, and Safari */
+}
